@@ -24,7 +24,7 @@ public class MyLinkedList<E>{
     public void setPrev(Node other){
       prev = other;
     }
-    public Integer getData(){
+    public E getData(){
       return data;
     }
     public E setData(E i){
@@ -62,20 +62,20 @@ public class MyLinkedList<E>{
     System.out.println("removed: " + test.remove(new Integer(7)));
     System.out.println("remove(new Integer(7))");
     System.out.println("test: " + test);
-    MyLinkedList test2 = new MyLinkedList();
+    MyLinkedList<Integer> test2 = new MyLinkedList<Integer>();
     test2.add(0,123);
     System.out.println("test2: " + test2);
     test2.extend(test);
     System.out.println("test2 and test1 combined: " + test2);
   }
 
-  public MyLinkedList<E>(){
+  public MyLinkedList(){
     size = 0;
   }
   public int size(){
     return size;
   }
-  public boolean add(int value){
+  public boolean add(E value){
     if (size() == 0){
       start = new Node(value, null, null);
       end = start;
@@ -135,7 +135,7 @@ public class MyLinkedList<E>{
       throw new IndexOutOfBoundsException();
     }
     Node target = start;
-    int output = target.getData();
+    E output = target.getData();
     for (int x  = 0; x < index; x++){
       target = target.next();
       output = target.getData();
