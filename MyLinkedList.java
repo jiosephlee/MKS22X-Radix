@@ -67,7 +67,7 @@ public class MyLinkedList<E>{
     System.out.println("test2: " + test2);
     test2.extend(test);
     System.out.println("test2 and test1 combined: " + test2);
-  }
+}
 
   public MyLinkedList(){
     size = 0;
@@ -223,4 +223,6 @@ public class MyLinkedList<E>{
        other.end = null;
      }
     }
+
+    
 }
