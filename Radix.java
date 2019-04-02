@@ -1,7 +1,10 @@
 public class Radix{
     public static void radixsort(int[]data){
-        MyLinkedList<Integer> hold = new MyLinkedList<Integer>();
-        MyLinkedList<Integer>[] buckets = new MyLinkedList<Integer>()[10];
+        MyLinkedList[] buckets = new MyLinkedList[10];
+        for (int i = 0; i < buckets.length; i++) {
+            buckets[i] = new MyLinkedList<Integer>();
+        }
+
         int big = 0; int count = 0;
         for(int i : data){
             if (i > big){
@@ -12,16 +15,41 @@ public class Radix{
             count++;
             big = big/10;
         }
-        for(int i : data){
-            buckets[i%10].add(i);
+        for(int i = 0; i < count; i++){
+            for(int j : data){
+                int yo = (int)(j/Math.pow(10,i));
+                buckets[yo%(10*(i+1))].add(j);
+            }
+            int index = 0;
+            for(MyLinkedList<Integer> x : buckets){
+                for(int y = 0; y < x.size(); y++){
+                    data[index] = x.removeFront();
+                    index++;
+                }
+            }
         }
-        for(MyLinkedList<Integer> i : buckets){
-            
+        for(int j : data){
+            int yo = (int)(j/Math.pow(10,count-1));
+            buckets[yo%(10*(count))].add(j);
         }
-        for(int i = 1; i < count; i++){
+        int index = 0;
+        for(int i = 1; i < 10; i++){
+            for(int y = 0; y < buckets[i].size(); y++){
+                int hold = buckets[i].removeFront();
+                if (hold > 0){
+                    buckets[0].add(hold);
+                } else{
+                    buckets[0].addBack(hold);
+                }
+                index++;
+            }
+        }
+        for(MyLinkedList<Integer> x : buckets){
+            for(int y = 0; y < x.size(); y++){
+                data[index] = x.removeFront();
+                index++;
+            }
+        }
 
-        }
-
-        }
     }
 }
