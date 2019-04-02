@@ -185,23 +185,11 @@ public class MyLinkedList<E>{
     size++;
   }
 
-  public E remove(int index){
-    if (index < 0 || index >= size()){
-      throw new IndexOutOfBoundsException();
-    }
-    Node target = getNthNode(index);
-    if (index == 0){
-      getNthNode(index+1).setPrev(null);
-      start = getNthNode(index+1);
-    } else if (index == size() - 1){
-      getNthNode(index - 1).setNext(null);
-      end = getNthNode(index - 1);
-    }else{
-      getNthNode(index - 1).setNext(getNthNode(index + 1));
-      getNthNode(index + 1).setPrev(getNthNode(index - 1));
-    }
+  public E removeFront(){
+    E target = start.getData();
+    start = start.next();
     size = size - 1;
-    return target.getData();
+    return target;
   }
 
   public boolean remove(E value){
@@ -224,5 +212,5 @@ public class MyLinkedList<E>{
      }
     }
 
-    
+
 }

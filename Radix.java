@@ -35,20 +35,18 @@ public class Radix{
         int index = 0;
         for(int i = 1; i < 10; i++){
             for(int y = 0; y < buckets[i].size(); y++){
-                int hold = buckets[i].removeFront();
+                int hold = (int)(buckets[i].removeFront());
                 if (hold > 0){
-                    buckets[0].add(hold);
+                    buckets[0].add(0, hold);
                 } else{
-                    buckets[0].addBack(hold);
+                    buckets[0].add(hold);
                 }
                 index++;
             }
         }
-        for(MyLinkedList<Integer> x : buckets){
-            for(int y = 0; y < x.size(); y++){
-                data[index] = x.removeFront();
-                index++;
-            }
+        for(int y = 0; y < buckets[0].size(); y++){
+            data[index] = (int)buckets[0].removeFront();
+            index++;
         }
 
     }
