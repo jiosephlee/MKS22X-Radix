@@ -59,8 +59,6 @@ public class MyLinkedList<E>{
     System.out.println("indexOf(7): " + test.indexOf(7));
     test.add(1,123);
     System.out.println("add(1,123)...");
-    System.out.println("removed: " + test.remove(new Integer(7)));
-    System.out.println("remove(new Integer(7))");
     System.out.println("test: " + test);
     MyLinkedList<Integer> test2 = new MyLinkedList<Integer>();
     test2.add(0,123);
@@ -192,13 +190,6 @@ public class MyLinkedList<E>{
     return target;
   }
 
-  public boolean remove(E value){
-   if(!contains(value)){
-     return false;
-   }
-   remove(indexOf(value));
-   return true;
- }
 
    public void extend(MyLinkedList<E> other){
      if(other.start != null){
