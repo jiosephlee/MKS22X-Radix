@@ -165,22 +165,9 @@ public class MyLinkedList<E>{
     return -1;
   }
 
-  public void add(int index,E value){
-    if (index < 0 || index > size()){
-      throw new IndexOutOfBoundsException();
-    }
-    if(index == size()){
-      add(value);
-      return;
-    }
-    Node target;
-    if(index == 0){
-      target = new Node(value, getNthNode(index), null);
-      start = target;
-    }else{
-    target = new Node(value, getNthNode(index), getNthNode(index-1));
-    getNthNode(index-1).setNext(target);
-    }
+  public void addBack(E value){
+    Node target = new Node(value, getNthNode(index), null);
+    start = target;
     getNthNode(index).setPrev(target);
     size++;
   }
@@ -203,6 +190,12 @@ public class MyLinkedList<E>{
     size = size - 1;
     return target.getData();
   }
+  public E removeFront(){
+      E toReturn = start.getData();
+      start = start.next();
+      size--;
+      return toReturn;
+  }
 
   public boolean remove(E value){
    if(!contains(value)){
@@ -224,5 +217,5 @@ public class MyLinkedList<E>{
      }
     }
 
-    
+
 }
