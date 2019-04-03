@@ -1,11 +1,22 @@
 public class Radix{
-    public static void radixsort(int[]data){
-        MyLinkedList[] buckets = new MyLinkedList[10];
-        for (int i = 0; i < buckets.length; i++) {
-            buckets[i] = new MyLinkedList<Integer>();
-        }
 
-        int big = 0; int count = 0;
+    public static void main(String[] args) {
+        int[] test = new int[] {1,4,5,1,4,6,1,9,6};
+        radixsort(test);
+        for(int i : test){
+            System.out.print(i + ",");
+        }
+        System.out.println();
+    }
+    @SuppressWarnings("unchecked")
+    public static void radixsort(int[]data){
+        @SuppressWarnings("unchecked")
+        MyLinkedList<Integer> hold = new MyLinkedList<Integer>();
+        MyLinkedList<Integer>[] buckets = new MyLinkedList[10];
+        for (int i = 0; i < data.length; i++) {
+            hold.add(data[i]);
+        }
+        int big = 0; int count = 1;
         for(int i : data){
             if (i > big){
                 big = i;
@@ -15,40 +26,35 @@ public class Radix{
             count++;
             big = big/10;
         }
+        //System.out.println(count);
         for(int i = 0; i < count; i++){
-            for(int j : data){
-                int yo = (int)(j/Math.pow(10,i));
+            for(int j = 0; j < hold.size(); j++){
+                int yo = hold.removeFront();
+                System.out.println(yo/Math.pow(10,i)%(10*(i+1)));
                 buckets[yo%(10*(i+1))].add(j);
             }
             int index = 0;
             for(MyLinkedList<Integer> x : buckets){
-                for(int y = 0; y < x.size(); y++){
-                    data[index] = x.removeFront();
-                    index++;
-                }
+                hold.extend(x);
             }
         }
-        for(int j : data){
-            int yo = (int)(j/Math.pow(10,count-1));
-            buckets[yo%(10*(count))].add(j);
-        }
+
         int index = 0;
         for(int i = 1; i < 10; i++){
             for(int y = 0; y < buckets[i].size(); y++){
-                int hold = buckets[i].removeFront();
-                if (hold > 0){
-                    buckets[0].add(hold);
+                int holder = buckets[i].removeFront();
+                if (holder > 0){
+                    buckets[0].add(0, holder);
                 } else{
-                    buckets[0].addBack(hold);
+                    buckets[0].add(holder);
                 }
                 index++;
             }
         }
-        for(MyLinkedList<Integer> x : buckets){
-            for(int y = 0; y < x.size(); y++){
-                data[index] = x.removeFront();
-                index++;
-            }
+        for(int y = 0; y < buckets[0].size(); y++){
+            System.out.println(buckets[0].removeFront());
+            //data[index] = buckets[0].removeFront();
+            index++;
         }
 
     }

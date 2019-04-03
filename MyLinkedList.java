@@ -59,8 +59,6 @@ public class MyLinkedList<E>{
     System.out.println("indexOf(7): " + test.indexOf(7));
     test.add(1,123);
     System.out.println("add(1,123)...");
-    System.out.println("removed: " + test.remove(new Integer(7)));
-    System.out.println("remove(new Integer(7))");
     System.out.println("test: " + test);
     MyLinkedList<Integer> test2 = new MyLinkedList<Integer>();
     test2.add(0,123);
@@ -172,23 +170,11 @@ public class MyLinkedList<E>{
     size++;
   }
 
-  public E remove(int index){
-    if (index < 0 || index >= size()){
-      throw new IndexOutOfBoundsException();
-    }
-    Node target = getNthNode(index);
-    if (index == 0){
-      getNthNode(index+1).setPrev(null);
-      start = getNthNode(index+1);
-    } else if (index == size() - 1){
-      getNthNode(index - 1).setNext(null);
-      end = getNthNode(index - 1);
-    }else{
-      getNthNode(index - 1).setNext(getNthNode(index + 1));
-      getNthNode(index + 1).setPrev(getNthNode(index - 1));
-    }
+  public E removeFront(){
+    E target = start.getData();
+    start = start.next();
     size = size - 1;
-    return target.getData();
+    return target;
   }
   public E removeFront(){
       E toReturn = start.getData();
@@ -197,13 +183,6 @@ public class MyLinkedList<E>{
       return toReturn;
   }
 
-  public boolean remove(E value){
-   if(!contains(value)){
-     return false;
-   }
-   remove(indexOf(value));
-   return true;
- }
 
    public void extend(MyLinkedList<E> other){
      if(other.start != null){
