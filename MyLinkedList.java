@@ -117,7 +117,12 @@ public class MyLinkedList<E>{
     size = size - 1;
     return target;
   }
-
+  public E removeBack(){
+    E target = end.getData();
+    end = end.prev();
+    size = size - 1;
+    return target;
+  }
    public void extend(MyLinkedList<E> other){
        if(other.start != null){
            if (size == 0) start = other.start;

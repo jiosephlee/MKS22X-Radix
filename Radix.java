@@ -1,7 +1,7 @@
 public class Radix{
 
     public static void main(String[] args) {
-        int[] test = new int[] {-1,4,5,-19,1,4,6,1,9,-6};
+        int[] test = new int[] {-9, -28, -16, -34, -50, 0, 32, 42, 16, 29};
         radixsort(test);
         for(int i : test){
             System.out.print(i + ",");
@@ -9,7 +9,7 @@ public class Radix{
         System.out.println();
         System.out.println("TIME FOR TEST 2");
 
-        test = new int[] {1231,54,25,1,4,62,351,19,6};
+        test = new int[] {-891429, -34349, -135868, -68048, -620397, -578817, -923357, -887007, -187247, -7267, -986767, -442527, -900616, -495306, -635486, -16386, -165225, -34385, -42195, -97935, -624185, -301875, -822824, -63244, -859994, -315924, -362914, -748873, -417863, -248753, -595013, -751942, -978282, -393141, -827941, -24111, -284260, -246850, -851070, -857470, -742710, -116510, -460380, 246860, 736190, 292270, 762940, 949210, 838890, 196211, 384111, 670931, 522771, 405552, 458532, 414112, 37632, 401812, 690619, 614299, 228259, 631389, 343739, 720969, 206149, 650339, 183409, 300869, 36909};
         radixsort(test);
         for(int i : test){
             System.out.print(i + ",");
@@ -20,22 +20,21 @@ public class Radix{
     public static void radixsort(int[]data){
         @SuppressWarnings("unchecked")
         MyLinkedList<Integer> hold = new MyLinkedList<Integer>();
-        MyLinkedList<Integer>[] buckets = new MyLinkedList[10];
-        for(int i =  0; i < 10; i++){
+        MyLinkedList<Integer>[] buckets = new MyLinkedList[20];
+        for(int i =  0; i < 20; i++){
             buckets[i] = new MyLinkedList<Integer>();
         }
+        int big = 0; int count = 0;
         for (int i = 0; i < data.length; i++) {
             hold.add(data[i]);
-        }
-        //find largest number of digits
-        int big = 0; int count = 1;
-        for(int i : data){
-            if (i*i > big*big){
-                big = i;
+            if(data[i] < 0){
+                if(data[i] * -1 > big) big = data[i] * -1;
+            } else if (data[i]> big){
+                big = data[i];
             }
         }
         //System.out.println(big);
-        while(big/10 > 0){
+        while(big > 0){
             count++;
             big = big/10;
         }
@@ -52,49 +51,32 @@ public class Radix{
                 //System.out.println("YO "   + (yo/(int)Math.pow(10,i)));
                 //System.out.println((yo/(int)Math.pow(10,i))%10);
                 if (yo >= 0){
-                    buckets[(yo/(int)Math.pow(10,i))%10].add(yo);
+                    buckets[(yo/(int)Math.pow(10,i))%10 + 10].add(yo);
                 } else{
-                    buckets[-1 * (yo/(int)Math.pow(10,i))%10].addBack(yo);
+                    buckets[9 + (yo/(int)Math.pow(10,i))%10].add(yo);
                     //System.out.println(" yooo" + buckets[-1 * (yo/(int)Math.pow(10,i))%10]);
                 }
             }
-            int index = 0;
-            /*for(MyLinkedList<Integer> x : buckets){
-                System.out.print(x);
-            }*/
+            //for(MyLinkedList<Integer> x : buckets){
+            //    System.out.print(x);
+            //}
             //System.out.println();
             //System.out.println(hold);
             //dump buckets back into holding linkedlist
             hold = new MyLinkedList<Integer>();
-            if (i != count - 1){
-                //System.out.println("sdf");
-                for(MyLinkedList<Integer> x : buckets){
-                    //System.out.println(x);
-                        //System.out.println("hhf");
-                    hold.extend(x);
+            //System.out.println("sdf");
+            for(MyLinkedList<Integer> x : buckets){
+                //System.out.println(x);
+                //System.out.println("hhf");
+                hold.extend(x);
                 }
-                //System.out.println("hold" + hold);
+            //System.out.println("hold" + hold);
             }
-        }
-        //System.out.println("before final resort" + hold);
-        //resort final time to resolve negs
-        for(int i = 1; i < 10; i++){
-            //System.out.println(buckets[i].size());
-            for(int y = 0; y < buckets[i].size();){
-                int holder = (int)buckets[i].removeFront();
-                //System.out.print("xs" + holder);
-                if (holder < 0){
-                    buckets[0].addBack(holder);
-                } else{
-                    buckets[0].add(holder);
-                }
-            }
-        }
-        //System.out.println(buckets[0]);
+
         //dump into array
         for(int y = 0; y < data.length; y++){
             //System.out.println(buckets[0].removeFront());
-            data[y] = buckets[0].removeFront();
+            data[y] = hold.removeFront();
         }
 
     }
