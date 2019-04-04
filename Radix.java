@@ -33,14 +33,12 @@ public class Radix{
                 big = data[i];
             }
         }
-        //System.out.println(big);
         while(big > 0){
             count++;
             big = big/10;
         }
         //System.out.println(count);
         //loop through n digit number of times to sort within buckets
-        //System.out.println(hold.size());
         for(int i = 0; i < count; i++){
             //System.out.println(i+1 + " nth digit pass!");
             //System.out.println(hold);
@@ -48,23 +46,13 @@ public class Radix{
                 //resort buckets
                 //System.out.println("hold" + hold);
                 int yo = hold.removeFront();
-                //System.out.println("YO "   + (yo/(int)Math.pow(10,i)));
-                //System.out.println((yo/(int)Math.pow(10,i))%10);
                 if (yo >= 0){
                     buckets[(yo/(int)Math.pow(10,i))%10 + 10].add(yo);
                 } else{
                     buckets[9 + (yo/(int)Math.pow(10,i))%10].add(yo);
-                    //System.out.println(" yooo" + buckets[-1 * (yo/(int)Math.pow(10,i))%10]);
                 }
             }
-            //for(MyLinkedList<Integer> x : buckets){
-            //    System.out.print(x);
-            //}
-            //System.out.println();
-            //System.out.println(hold);
             //dump buckets back into holding linkedlist
-            hold = new MyLinkedList<Integer>();
-            //System.out.println("sdf");
             for(MyLinkedList<Integer> x : buckets){
                 //System.out.println(x);
                 //System.out.println("hhf");
